@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UP-Maputo Jornalismo 4º ano</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+        }
+        .navbar-brand span {
+            color: var(--secondary-color);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('background.jpg') center/cover;
+            min-height: 70vh;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .media-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+        .media-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .media-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 2;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .footer a {
+            color: #bdc3c7;
+            transition: all 0.3s ease;
+        }
+        .footer a:hover {
+            color: white;
+            text-decoration: none;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-bottom: 10px;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        /* Media player styles */
+        .media-player-container {
+            position: relative;
+            background-color: #000;
+        }
+        
+        .media-player-container video, 
+        .media-player-container audio {
+            width: 100%;
+            display: block;
+        }
+        
+        .media-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .media-controls button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+        
+        .progress-container {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+        
+        .time-display {
+            color: white;
+            font-size: 0.9rem;
+            min-width: 50px;
+            text-align: right;
+        }
+        
+        /* Splash screen */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+        
+        .splash-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen">
+        <div class="text-center animate__animated animate__fadeIn">
+            <h1 class="mb-4 animate__animated animate__bounceIn">UP-Maputo Jornalismo</h1>
+            <p class="lead mb-4">4º ano - Produção e Gestão de Conteúdos na WEB</p>
+            <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">UP-<span>Maputo</span> Jornalismo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#videos">Vídeos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#podcasts">Podcasts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sobre">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contato">Contato</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="hero-section text-white">
+            <div class="container text-center">
+                <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeInDown">Jornalismo Multimídia</h1>
+                <p class="lead mb-5 animate__animated animate__fadeInUp">Produções acadêmicas dos estudantes do 4º ano de Jornalismo da UP-Maputo</p>
+                <div class="animate__animated animate__fadeInUp animate__delay-1s">
+                    <a href="#videos" class="btn btn-primary btn-lg me-2">Explorar Conteúdo</a>
+                    <a href="#sobre" class="btn btn-outline-light btn-lg">Sobre o Projeto</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container py-5">
+            <!-- Destaques -->
+            <section id="destaques" class="mb-5">
+                <h2 class="text-center section-title fw-bold">Destaques</h2>
+                
+                <div class="row g-4">
+                    <!-- Video Destaque -->
+                    <div class="col-md-6">
+                        <div class="card media-card h-100">
+                            <div class="position-relative media-player-container">
+                                <video class="w-100" style="height: 300px; object-fit: cover;">
+                                    <source src="spot acidentes grupo 1.mp4" type="video/mp4">
+                                    Seu navegador não suporta o elemento de vídeo.
+                                </video>
+                                <span class="badge bg-danger media-badge">Vídeo</span>
+                                <div class="media-controls">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                    <div class="progress-container">
+                                        <div class="progress" style="height: 5px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="time-display">0:00</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Spot: Acidentes Rodoviários</h5>
+                                <p class="card-text">Campanha de conscientização sobre acidentes rodoviários em Moçambique.</p>
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span>Grupo 1</span>
+                                    <span>2:45 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Podcast Destaque -->
+                    <div class="col-md-6">
+                        <div class="card media-card h-100">
+                            <div class="position-relative media-player-container" style="background-color: #f8f9fa; height: 300px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-microphone-alt fa-5x text-secondary"></i>
+                                <span class="badge bg-warning text-dark media-badge">Podcast</span>
+                                <audio>
+                                    <source src="AUIDO SUICIDIO. 1mp3.mp3" type="audio/mpeg">
+                                    Seu navegador não suporta o elemento de áudio.
+                                </audio>
+                                <div class="media-controls">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                    <div class="progress-container">
+                                        <div class="progress" style="height: 5px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="time-display">0:00</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Podcast: Discussão sobre Suicídio</h5>
+                                <p class="card-text">Análise profunda sobre as causas e prevenção do suicídio na sociedade moderna.</p>
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span>Grupo Especial</span>
+                                    <span>15:30 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vídeos Section -->
+            <section id="videos" class="mb-5">
+                <h2 class="text-center section-title fw-bold">Vídeos</h2>
+                
+                <div class="row g-4">
+                    <!-- Video 1 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card media-card h-100">
+                            <div class="position-relative media-player-container">
+                                <video class="w-100" style="height: 180px; object-fit: cover;">
+                                    <source src="Iv_020250525221130-3.mp4" type="video/mp4">
+                                </video>
+                                <span class="badge bg-danger media-badge">Vídeo</span>
+                                <div class="media-controls">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                    <span class="time-display">4:32</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Entrevista sobre Educação</h5>
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span>25/05/2025</span>
+                                    <span>4:32 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video 2 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card media-card h-100">
+                            <div class="position-relative media-player-container">
+                                <video class="w-100" style="height: 180px; object-fit: cover;">
+                                    <source src="spot suicidio.mp4" type="video/mp4">
+                                </video>
+                                <span class="badge bg-danger media-badge">Vídeo</span>
+                                <div class="media-controls">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                    <span class="time-display">1:45</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Spot: Prevenção ao Suicídio</h5>
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span>10/06/2025</span>
+                                    <span>1:45 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video 3 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card media-card h-100">
+                            <div class="position-relative media-player-container">
+                                <video class="w-100" style="height: 180px; object-fit: cover;">
+                                    <source src="VIDEO-2025-06-11-09-32-21.mp4" type="video/mp4">
+                                </video>
+                                <span class="badge bg-danger media-badge">Vídeo</span>
+                                <div class="media-controls">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                    <span class="time-display">6:15</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Reportagem Urbana</h5>
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span>11/06/2025</span>
+                                    <span>6:15 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video 4 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card media-card h-100">
+                            <div class="position-relative media-player-container">
+                                <video class="w-100" style="height: 180px; object-fit: cover;">
+                                    <source src="WhatsApp Video 2025-06-03 at 15.14.41.mp4" type="video/mp4">
+                                </video>
+                                <span class="badge bg-danger media-badge">Vídeo</span>
+                                <div class="media-controls">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                    <span class="time-display">8:42</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Documentário Acadêmico</h5>
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span>03/06/2025</span>
+                                    <span>8:42 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Podcasts Section -->
+            <section id="podcasts" class="mb-5">
+                <h2 class="text-center section-title fw-bold">Podcasts</h2>
+                
+                <div class="row g-4">
+                    <!-- Podcast 1 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card media-card h-100">
+                            <div class="position-relative media-player-container" style="background-color: #f8f9fa; height: 180px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-microphone-alt fa-4x text-secondary"></i>
+                                <span class="badge bg-warning text-dark media-badge">Podcast</span>
+                                <audio>
+                                    <source src="GRUPO1ACIDENTES.mp3" type="audio/mpeg">
+                                </audio>
+                                <div class="media-controls">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                    <span class="time-display">12:45</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Grupo I: Acidentes</h5>
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span>15/05/2025</span>
+                                    <span>12:45 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Podcast 2 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card media-card h-100">
+                            <div class="position-relative media-player-container" style="background-color: #f8f9fa; height: 180px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-microphone-alt fa-4x text-secondary"></i>
+                                <span class="badge bg-warning text-dark media-badge">Podcast</span>
+                                <audio>
+                                    <source src="GRUPO II ACIDENTES.mp3" type="audio/mpeg">
+                                </audio>
+                                <div class="media-controls">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                    <span class="time-display">18:30</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Grupo II: Acidentes</h5>
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span>10/06/2025</span>
+                                    <span>18:30 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Podcast 3 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card media-card h-100">
+                            <div class="position-relative media-player-container" style="background-color: #f8f9fa; height: 180px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-microphone-alt fa-4x text-secondary"></i>
+                                <span class="badge bg-warning text-dark media-badge">Podcast</span>
+                                <audio>
+                                    <source src="GRUPO V.mp3" type="audio/mpeg">
+                                </audio>
+                                <div class="media-controls">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                    <span class="time-display">22:15</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Grupo V: Discussão</h5>
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span>05/06/2025</span>
+                                    <span>22:15 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Podcast 4 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card media-card h-100">
+                            <div class="position-relative media-player-container" style="background-color: #f8f9fa; height: 180px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-microphone-alt fa-4x text-secondary"></i>
+                                <span class="badge bg-warning text-dark media-badge">Podcast</span>
+                                <audio>
+                                    <source src="rodoviario completo_mixagem.mp3" type="audio/mpeg">
+                                </audio>
+                                <div class="media-controls">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                    <span class="time-display">25:10</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Rodoviário Completo</h5>
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span>20/05/2025</span>
+                                    <span>25:10 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sobre Section -->
+            <section id="sobre" class="mb-5 py-5 bg-light rounded-3">
+                <div class="container">
+                    <h2 class="text-center section-title fw-bold">Sobre o Projeto</h2>
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 mb-4 mb-lg-0">
+                            <img src="about-image.jpg" class="img-fluid rounded" alt="Sobre o projeto" style="width: 100%; height: auto;">
+                        </div>
+                        <div class="col-lg-6">
+                            <h3>UP-Maputo Jornalismo 4º ano</h3>
+                            <p>Este site foi desenvolvido como parte integrante da cadeira de Produção e Gestão de Conteúdos na WEB, do curso de Jornalismo da Universidade Pedagógica de Maputo.</p>
+                            <p>O objetivo principal é demonstrar na prática os conhecimentos adquiridos sobre produção, organização e publicação de conteúdos multimídia na web, com foco especial em jornalismo digital.</p>
+                            <p>Todos os conteúdos aqui publicados são produções originais dos estudantes do 4º ano de Jornalismo, desenvolvidos como trabalhos acadêmicos e práticos.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contato Section -->
+            <section id="contato" class="mb-5">
+                <h2 class="text-center section-title fw-bold">Contato</h2>
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h3 class="card-title mb-4">Entre em Contato</h3>
+                                <form id="contactForm">
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" placeholder="Seu nome" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="email" class="form-control" placeholder="Seu email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" placeholder="Assunto">
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" rows="5" placeholder="Sua mensagem" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h3 class="card-title mb-4">Informações</h3>
+                                <ul class="list-unstyled">
+                                    <li class="mb-3">
+                                        <h5><i class="fas fa-map-marker-alt me-2 text-primary"></i> Endereço</h5>
+                                        <p>Universidade Pedagógica de Maputo<br>Departamento de Jornalismo</p>
+                                    </li>
+                                    <li class="mb-3">
+                                        <h5><i class="fas fa-envelope me-2 text-primary"></i> Email</h5>
+                                        <p>gri@up.ac.mz</p>
+                                    </li>
+                                    <li class="mb-3">
+                                        <h5><i class="fas fa-phone me-2 text-primary"></i> Telefone</h5>
+                                        <p>+258 84 200 7116</p>
+                                    </li>
+                                    <li>
+                                        <h5><i class="fas fa-clock me-2 text-primary"></i> Horário</h5>
+                                        <p>Segunda a Sexta: 08h00 - 16h00</p>
+                                    </li>
+                                </ul>
+                                <div class="mt-4">
+                                    <a href="#" class="social-icon me-2"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#" class="social-icon me-2"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="social-icon me-2"><i class="fab fa-instagram"></i></a>
+                                    <a href="#" class="social-icon me-2"><i class="fab fa-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="small mb-0">&copy; 2025 UP-Maputo Jornalismo 4º ano. Todos os direitos reservados.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="small mb-0">Desenvolvido para a cadeira de Produção e Gestão de Conteúdos na WEB</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Splash Screen
+        document.addEventListener('DOMContentLoaded', function() {
+            const splashScreen = document.querySelector('.splash-screen');
+            
+            setTimeout(() => {
+                splashScreen.classList.add('hidden');
+                
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                }, 1000);
+            }, 3000);
+        });
+
+        // Media player functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize all video players
+            document.querySelectorAll('.media-player-container video').forEach(video => {
+                const container = video.closest('.media-player-container');
+                const playBtn = container.querySelector('.play-btn');
+                const progressBar = container.querySelector('.progress-bar');
+                const timeDisplay = container.querySelector('.time-display');
+                
+                // Play/Pause button
+                playBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (video.paused) {
+                        video.play();
+                        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    } else {
+                        video.pause();
+                        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    }
+                });
+                
+                // Update progress and time
+                video.addEventListener('timeupdate', function() {
+                    if (progressBar) {
+                        const percent = (video.currentTime / video.duration) * 100;
+                        progressBar.style.width = percent + '%';
+                    }
+                    
+                    if (timeDisplay) {
+                        const minutes = Math.floor(video.currentTime / 60);
+                        const seconds = Math.floor(video.currentTime % 60);
+                        timeDisplay.textContent = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+                    }
+                });
+                
+                // Reset when ended
+                video.addEventListener('ended', function() {
+                    if (playBtn) playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                });
+            });
+            
+            // Initialize all audio players
+            document.querySelectorAll('.media-player-container audio').forEach(audio => {
+                const container = audio.closest('.media-player-container');
+                const playBtn = container.querySelector('.play-btn');
+                const progressBar = container.querySelector('.progress-bar');
+                const timeDisplay = container.querySelector('.time-display');
+                
+                // Play/Pause button
+                playBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (audio.paused) {
+                        audio.play();
+                        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    } else {
+                        audio.pause();
+                        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    }
+                });
+                
+                // Update progress and time
+                audio.addEventListener('timeupdate', function() {
+                    if (progressBar) {
+                        const percent = (audio.currentTime / audio.duration) * 100;
+                        progressBar.style.width = percent + '%';
+                    }
+                    
+                    if (timeDisplay) {
+                        const minutes = Math.floor(audio.currentTime / 60);
+                        const seconds = Math.floor(audio.currentTime % 60);
+                        timeDisplay.textContent = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+                    }
+                });
+                
+                // Reset when ended
+                audio.addEventListener('ended', function() {
+                    if (playBtn) playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                });
+            });
+            
+            // Contact form
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+                    this.reset();
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
